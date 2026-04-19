@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZestyBestyBeats — OpJargon companion</title>
+  <style>
+    :root { --ink:#0c1220; --mist:#9fb4ff; --pulse:#6cf6c5; --ember:#ff7a59; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, sans-serif; background: radial-gradient(circle at 20% 20%, #1b2550, #070b16 55%); color:#e8ecff; min-height:100vh; }
+    header { padding:28px 32px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    h1 { margin:0; letter-spacing:0.04em; font-weight:650; }
+    .sub { color:var(--mist); max-width:640px; line-height:1.5; }
+    main { padding: 0 32px 48px; display:grid; gap:22px; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); }
+    .card { background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:18px; box-shadow:0 18px 40px rgba(0,0,0,0.35); }
+    label { display:block; font-size:0.85rem; color:#c7d2fe; margin-bottom:6px; }
+    textarea, input, select { width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.12); padding:10px 12px; background:rgba(5,8,20,0.65); color:#f8fafc; }
+    button { border:none; border-radius:999px; padding:10px 18px; font-weight:600; cursor:pointer; background:linear-gradient(120deg,var(--pulse),#4be0ff); color:#041016; }
+    button.secondary { background:rgba(255,255,255,0.08); color:#e5e7eb; }
+    .beats { height:120px; border-radius:14px; background:#050914; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.08); }
+    canvas { width:100%; height:100%; display:block; }
+    footer { padding:24px 32px; color:#94a3b8; font-size:0.9rem; }
+    a { color:#7dd3fc; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>ZestyBestyBeats</h1>
+      <p class="sub">A playful console for calmer language and a reactive beat ribbon. Pair it with the Zesty CLI and OpJargon capsules.</p>
+    </div>
+    <div>
+      <button id="btnPulse" type="button">Pulse</button>
+      <button id="btnHush" class="secondary" type="button">Hush</button>
+    </div>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Simplify</h2>
+      <label for="txtIn">Phrase</label>
+      <textarea id="txtIn" rows="5" placeholder="Paste jargon here..."></textarea>
+      <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="btnSimplify" type="button">Soften</button>
+        <select id="langPick"></select>
+      </div>
+      <p id="outSoft" style="margin-top:12px; line-height:1.5;"></p>
+    </section>
+    <section class="card">
+      <h2>Beat ribbon</h2>
+      <div class="beats"><canvas id="cv" width="1200" height="240"></canvas></div>
+      <p id="beatMeta" style="margin-top:10px; color:#cbd5f5;"></p>
+    </section>
+    <section class="card">
+      <h2>On-chain anchors</h2>
+      <p style="line-height:1.6;">Reference addresses (UI-only entropy anchors, not access control):</p>
+      <ul id="addrList" style="padding-left:18px; line-height:1.7; word-break:break-all;"></ul>
+    </section>
+  </main>
+  <footer>
+    Crafted for OpJargon — verify contracts independently before mainnet use.
+  </footer>
+  <script>
+    const anchors = [
+      "0xFdBd268E1BA2bcEb9d82d0d6aE46Db8102683CE2",
+      "0x7887F759d7C1c2d35F43D787dF32581E7A852259",
+      "0xbDa04E902F3b149D6744F241c1c40A65EF372eD3",
+      "0x22f466B5f45C2040eCa5655e3B50D8479e239cC7",
+      "0x00C6DE6ce75ff0053CB6858DE15f2FAb22aF7961",
+      "0xa11d51A2e2f3c559eEc0F7f63C0D7A70Db1065eb",
+      "0xa2047b2840D6789CF59b328ED73662046D09C0f3",
+      "0x5C9e86d4DaF7C0Ce67430a7CCab34712ac8739ed",
+      "0x5766AacDc38B07c5656AE250c79271c89087780b",
+      "0x30DA08Ad73521d01765023ECb842e5C9d1302298",
+      "0xe8869CE04f7853bcDB849e4c640c57147A56C4C0",
+      "0x25aDe0C31f279c456d8A15Ab51666e5FB31a8F28",
+      "0x0285ed6e277C5D43469CE1FCD0b4381700610523",
+      "0x5C0B195fC7C35E525C234E472Fcbb9037a7139d7",
+      "0xDB84251a3b1a3da8216a0095eBf1C4262D4fBD0C",
+      "0x95F48e353b6568636267Cd0A958b5978f0Cee383",
+    ];
+    const greetings = {
+      en: "Hello — ready to untangle phrases.",
+      fr: "Bonjour — prêt à adoucir le jargon.",
+      de: "Hallo — bereit, Kreisdiagramm-Sprech zu glätten.",
+      es: "Hola — listo para suavizar modismos corporativos."
+    };
+    const lex = {
+      en: ["synergy","leverage","bandwidth","circle back","deep dive","optimize"],
+      fr: ["synergie","leviers","bande passante"],
