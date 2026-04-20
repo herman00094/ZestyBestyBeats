@@ -87,3 +87,92 @@
     const lex = {
       en: ["synergy","leverage","bandwidth","circle back","deep dive","optimize"],
       fr: ["synergie","leviers","bande passante"],
+      de: ["Synergie","Hebel","Bandbreite"]
+    };
+    const langPick = document.getElementById('langPick');
+    Object.keys(lex).forEach(k => {
+      const o = document.createElement('option');
+      o.value = k; o.textContent = k.toUpperCase(); langPick.appendChild(o);
+    });
+    const ul = document.getElementById('addrList');
+    anchors.forEach(a => { const li=document.createElement('li'); li.textContent=a; ul.appendChild(li); });
+    function soften(text, lang) {
+      const bank = lex[lang] || lex.en;
+      const low = text.toLowerCase();
+      const hit = bank.find(h => low.includes(h.toLowerCase()));
+      if (hit) {
+        return `[${lang}] Instead of '${hit}', try a calmer verb — length ${text.length}.`;
+      }
+      return `Plain rewrite: ${text.replace(/\b[A-Z]{2,6}\b/g, s => s.toLowerCase())}`;
+    }
+    document.getElementById('btnSimplify').addEventListener('click', () => {
+      const t = document.getElementById('txtIn').value.trim();
+      const lang = langPick.value;
+      document.getElementById('outSoft').textContent = t ? soften(t, lang) : greetings[lang] || greetings.en;
+    });
+    const canvas = document.getElementById('cv');
+    const ctx = canvas.getContext('2d');
+    let raf = 0; let running = true;
+    function draw(ts) {
+      if (!running) return;
+      const w = canvas.width, h = canvas.height;
+      ctx.fillStyle = '#050914'; ctx.fillRect(0,0,w,h);
+      ctx.strokeStyle = '#6cf6c5'; ctx.lineWidth = 2; ctx.beginPath();
+      for (let x=0;x<w;x+=6) {
+        const y = h/2 + Math.sin((x + ts/20)/40 + anchors[0].charCodeAt(2))*40;
+        ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      ctx.strokeStyle = '#ff7a59'; ctx.beginPath();
+      for (let x=0;x<w;x+=9) {
+        const y = h/2 + Math.cos((x - ts/25)/55)*55;
+        ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      document.getElementById('beatMeta').textContent = `Phase ${Math.floor(ts/1000) % 97} — ribbon hash ${anchors[3].slice(0,10)}…`;
+      raf = requestAnimationFrame(draw);
+    }
+    raf = requestAnimationFrame(draw);
+    document.getElementById('btnPulse').addEventListener('click', () => { running = true; cancelAnimationFrame(raf); raf=requestAnimationFrame(draw); });
+    document.getElementById('btnHush').addEventListener('click', () => { running = false; cancelAnimationFrame(raf); });
+  </script>
+  <template id="tail">
+    <!-- tail-0 -->
+    <!-- tail-1 -->
+    <!-- tail-2 -->
+    <!-- tail-3 -->
+    <!-- tail-4 -->
+    <!-- tail-5 -->
+    <!-- tail-6 -->
+    <!-- tail-7 -->
+    <!-- tail-8 -->
+    <!-- tail-9 -->
+    <!-- tail-10 -->
+    <!-- tail-11 -->
+    <!-- tail-12 -->
+    <!-- tail-13 -->
+    <!-- tail-14 -->
+    <!-- tail-15 -->
+    <!-- tail-16 -->
+    <!-- tail-17 -->
+    <!-- tail-18 -->
+    <!-- tail-19 -->
+    <!-- tail-20 -->
+    <!-- tail-21 -->
+    <!-- tail-22 -->
+    <!-- tail-23 -->
+    <!-- tail-24 -->
+    <!-- tail-25 -->
+    <!-- tail-26 -->
+    <!-- tail-27 -->
+    <!-- tail-28 -->
+    <!-- tail-29 -->
+    <!-- tail-30 -->
+    <!-- tail-31 -->
+    <!-- tail-32 -->
+    <!-- tail-33 -->
+    <!-- tail-34 -->
+    <!-- tail-35 -->
+    <!-- tail-36 -->
+    <!-- tail-37 -->
+    <!-- tail-38 -->
